@@ -363,11 +363,28 @@
         }
         
     }
-//    else if (_type == BRACellContentTypeInlineString) {
-//// TODO : Not Implemented
+    else if (_type == BRACellContentTypeInlineString) {
+// TODO : Not Implemented
 //        NOT_IMPLEMENTED
-//        
-//    }
+      @try {
+        // If _value is actually a string, then just return
+        if ([_value isKindOfClass:NSString.class]) {
+          return [[NSAttributedString alloc] initWithString:_value attributes:attributedTextAttributes];
+        }
+        // _value can be a dictionary with __text & _xml.space = 'reserve'
+        // in case of leading or tailing spaces included within the text
+        if ([_value isKindOfClass:NSDictionary.class]){
+          NSDictionary* dict = (NSDictionary*)_value;
+          return [[NSAttributedString alloc] initWithString:dict[@"__text"] attributes:attributedTextAttributes];
+        }
+        // Not sure what is in the _value
+        return [[NSAttributedString alloc] initWithString:@"" attributes:attributedTextAttributes];
+      }
+      @catch (NSException * e) {
+        return [[NSAttributedString alloc] initWithString:@"" attributes:attributedTextAttributes];
+      }
+        
+    }
     else if (_type == BRACellContentTypeNumber || _type == BRACellContentTypeUnknown) {
         BRACellFormat *cellFormat = _worksheet.styles.cellFormats[_styleId];
         NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@""];
