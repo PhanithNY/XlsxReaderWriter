@@ -362,11 +362,13 @@
             return [[NSAttributedString alloc] initWithString:@"" attributes:attributedTextAttributes];
         }
         
-    } else if (_type == BRACellContentTypeInlineString) {
-// TODO : Not Implemented
-        NOT_IMPLEMENTED
-        
-    } else if (_type == BRACellContentTypeNumber || _type == BRACellContentTypeUnknown) {
+    }
+//    else if (_type == BRACellContentTypeInlineString) {
+//// TODO : Not Implemented
+//        NOT_IMPLEMENTED
+//        
+//    }
+    else if (_type == BRACellContentTypeNumber || _type == BRACellContentTypeUnknown) {
         BRACellFormat *cellFormat = _worksheet.styles.cellFormats[_styleId];
         NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@""];
         if (_value != nil) {
